@@ -125,7 +125,7 @@ const url = props.selectedEmployee
   : 'http://127.0.0.1:8000/employee/'
 
 async function addEmployee(employee: Employee) {
-  const { error } = await useFetch(url, {
+  await useFetch(url, {
     method: props.selectedEmployee ? 'PUT' : 'POST',
     headers: {
       Accept: 'application/json',
@@ -133,10 +133,7 @@ async function addEmployee(employee: Employee) {
     },
     body: JSON.stringify(employee)
   })
-  if (error) {
-    errorFetching.value = true
-    return
-  }
+
   emit('close-form')
 }
 
@@ -162,19 +159,14 @@ function onSubmitForm() {
 }
 
 async function onDelete() {
-  const { error } = await useFetch(url, {
+  await useFetch(url, {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     }
   })
-  if (error) {
-    console.log(error)
-    errorFetching.value = true
-    errorMessage.value = error.value
-    return
-  }
+
   emit('close-form')
 }
 </script>
